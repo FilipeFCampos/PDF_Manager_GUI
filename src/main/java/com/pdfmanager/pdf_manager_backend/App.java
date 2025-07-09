@@ -3,7 +3,7 @@ package com.pdfmanager.pdf_manager_backend;
 import com.pdfmanager.pdf_manager_backend.cli.UserInterface;
 import com.pdfmanager.pdf_manager_backend.db.DatabaseManager;
 
-public class Main {
+public class App {
 
     public static void main(String[] args) {
         DatabaseManager db;
