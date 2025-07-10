@@ -59,15 +59,6 @@ public class UserInterface {
         System.out.println("#================================#");
     }
 
-    public String returnToGUI(String content) {
-        return content;
-    }
-
-    public void teste() {
-        communicator = new Communicator();
-        communicator.printToGUI("content");
-    }
-
     /**
      * Prints the available options to the user.
      */

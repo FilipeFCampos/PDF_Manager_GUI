@@ -46,8 +46,6 @@ public class GUIController {
     @FXML
     protected void addFile(ActionEvent event) throws IOException {
         disablePane("#options");
-        ui.teste();
-
     }
 
     private void disablePane(String id) throws IOException {
