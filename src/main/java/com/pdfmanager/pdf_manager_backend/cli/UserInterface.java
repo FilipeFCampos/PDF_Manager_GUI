@@ -12,6 +12,7 @@ import com.pdfmanager.pdf_manager_backend.files.Slide;
 import com.pdfmanager.pdf_manager_backend.utils.BibTexGenerator;
 import com.pdfmanager.pdf_manager_backend.utils.CollectionPackager;
 import com.pdfmanager.pdf_manager_backend.utils.FileManager;
+import com.pdfmanager.pdf_manager_frontend.utils.Communicator;
 import io.restassured.path.json.JsonPath;
 
 import java.io.File;
@@ -28,6 +29,7 @@ public class UserInterface {
     private final FileManager fileManager;
     private final DatabaseManager db;
     private final File configPath;
+    private Communicator communicator;
 
     // Colored text constants
     public static final String RESET = "\u001B[0m";
@@ -55,6 +57,15 @@ public class UserInterface {
         System.out.println("#================================#");
         System.out.println("|    Welcome to PDF Manager!!    |");
         System.out.println("#================================#");
+    }
+
+    public String returnToGUI(String content) {
+        return content;
+    }
+
+    public void teste() {
+        communicator = new Communicator();
+        communicator.printToGUI("content");
     }
 
     /**

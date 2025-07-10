@@ -8,15 +8,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class GUIController {
 
-    @FXML
     private UserInterface ui;
+    private Parent root;
+    @FXML private StackPane stackPane;
+    @FXML public Text output;
 
     public GUIController() {
         DatabaseManager db;
@@ -31,10 +36,37 @@ public class GUIController {
 
     @FXML
     protected void switchToMenuScene(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("options.fxml")));
+        this.root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("options.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 480, 480);
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    protected void addFile(ActionEvent event) throws IOException {
+        disablePane("#options");
+        ui.teste();
+
+    }
+
+    private void disablePane(String id) throws IOException {
+        Node node = stackPane.lookup(id);
+        if (node != null) {
+            node.setDisable(true);
+            node.setVisible(false);
+        }
+    }
+
+    private void enablePane(String id) throws IOException {
+        Node node = stackPane.lookup(id);
+        if (node != null) {
+            node.setDisable(false);
+            node.setVisible(true);
+        }
+    }
+
+    public void printToGUI(String content) {
+        output.setText(content);
     }
 }

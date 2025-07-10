@@ -11,13 +11,26 @@
             <Font name="Arial Bold" size="28.0" />
          </font>
       </Text>
-      <VBox layoutX="95.0" layoutY="140.0" prefHeight="200.0" prefWidth="289.0" spacing="10.0">
+      <StackPane fx:id="stackPane" layoutX="95.0" layoutY="128.0" prefHeight="176.0" prefWidth="289.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-            <CheckBox mnemonicParsing="false" text="CheckBox" />
-            <CheckBox mnemonicParsing="false" text="CheckBox" />
-            <CheckBox mnemonicParsing="false" text="CheckBox" />
+            <VBox fx:id="options" prefHeight="200.0" prefWidth="289.0" spacing="10.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choose one of the options below:">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <RadioButton mnemonicParsing="false" onAction="#addFile" text="Add file" />
+                  <RadioButton mnemonicParsing="false" text="List files" />
+                  <RadioButton mnemonicParsing="false" text="Remove file" />
+                  <RadioButton mnemonicParsing="false" text="Change library" />
+                  <RadioButton mnemonicParsing="false" text="Edit entry" />
+                  <RadioButton mnemonicParsing="false" text="Manage collections" />
+               </children>
+            </VBox>
+            <VBox disable="true" prefHeight="200.0" prefWidth="100.0" visible="false" />
          </children>
-      </VBox>
+      </StackPane>
+      <Text fx:id="output" layoutX="95.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.0" />
    </children>
 </AnchorPane>
