@@ -9,4 +9,5 @@ module com.pdfmanager.pdf_manager_frontend {
     opens com.pdfmanager.pdf_manager_frontend to javafx.fxml;
     exports com.pdfmanager.pdf_manager_frontend;
     exports com.pdfmanager.pdf_manager_frontend.utils;
+    exports com.pdfmanager.pdf_manager_backend.files;
 }

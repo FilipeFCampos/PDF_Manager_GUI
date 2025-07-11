@@ -13,7 +13,7 @@
         </Text>
         <StackPane fx:id="stackPane" layoutX="95.0" layoutY="128.0" prefHeight="176.0" prefWidth="289.0">
             <children>
-                <VBox fx:id="addFileGlobal" disable="true" prefHeight="200.0" prefWidth="100.0" spacing="10.0" visible="false">
+                <VBox fx:id="addFileGlobalPane" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                     <children>
                         <Label text="Document type:" />
                         <HBox prefHeight="22.0" prefWidth="289.0" spacing="40.0">
@@ -33,7 +33,7 @@
                         <TextField fx:id="authorsfield" />
                   <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#submit" text="Next" />
                     </children></VBox>
-            <VBox fx:id="addBook" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+            <VBox fx:id="addBookPane" disable="true" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" visible="false">
                <children>
                   <Label text="Subtitle" />
                   <TextField fx:id="subtitlefield" />
@@ -43,7 +43,7 @@
                   <TextField fx:id="publishyearfield" />
                   <Label layoutX="10.0" layoutY="138.0" text="Publisher" />
                   <TextField fx:id="publisherfield" layoutX="10.0" layoutY="166.0" />
-                  <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#submit" text="Next" />
+                  <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#addBook" text="Next" />
                </children>
             </VBox>
             </children>

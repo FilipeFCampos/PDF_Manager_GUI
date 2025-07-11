@@ -773,6 +773,31 @@ public class UserInterface {
         }
     }
 
+    public String addToDbFromGUI(Map<String, Object> data) {
+        // This method is used by the GUI to add a file to the database.
+        // It receives a map with the data and returns a success message or an error message.
+        if (data == null || data.isEmpty()) {
+            return "ERROR: No data provided.";
+        }
+
+        if (db.writeObject(data)) {
+            String title = data.get("title").toString();
+            String type = data.get("type").toString();
+            File path;
+            if (type.equals("Book")) path = db.getBooksPath();
+            else if (type.equals("ClassNote")) path = db.getClassNotesPath();
+            else path = db.getSlidesPath();
+            try {
+                addToLibrary(title, path);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return "File '" + title + "' added successfully to the database.";
+        }
+
+        return "ERROR: Failed to add file to database.";
+    }
+
     /**
      * Handles the edit field option logic.
      */

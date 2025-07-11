@@ -1,5 +1,7 @@
 package com.pdfmanager.pdf_manager_frontend;
 
+import com.pdfmanager.pdf_manager_backend.cli.UserInterface;
+import com.pdfmanager.pdf_manager_backend.db.DatabaseManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -10,7 +12,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AddFileController {
@@ -25,22 +29,34 @@ public class AddFileController {
     @FXML TextField subtitlefield;
     @FXML TextField publisherfield;
     @FXML TextField publishyearfield;
-    Map<String, String> buffer = new HashMap<>();
+    Map<String, Object> buffer = new HashMap<>();
     @FXML public Text output;
+    private UserInterface ui;
+
+    public AddFileController() {
+        DatabaseManager db;
+        try {
+            db = new DatabaseManager();
+        } catch (Exception e) {
+            System.err.println("ERROR: Invalid database path");
+            return;
+        }
+        this.ui = new UserInterface(db);
+    }
 
     @FXML
     private void submit(ActionEvent event) {
-        buffer.clear();
+        this.buffer.clear();
         String title = titlefield.getText();
         String authors = authorsfield.getText();
         String path = pathfield.getText();
         String type;
         if (bookrb.isSelected()) {
-            type = "book";
+            type = "Book";
         } else if (classnoterb.isSelected()) {
-            type = "classnote";
+            type = "ClassNote";
         } else if (sliderb.isSelected()) {
-            type = "slide";
+            type = "Slide";
         } else {
             type = null;
         }
@@ -50,35 +66,21 @@ public class AddFileController {
             return;
         }
 
-        buffer.put("title", title);
-        buffer.put("authors", authors);
-        buffer.put("path", path);
-        buffer.put("type", type);
+        this.buffer.put("title", title);
+        List<String> authorsList = Arrays.asList(authors.split("\\s*,\\s*"));
+        this.buffer.put("authors", authorsList);
+        this.buffer.put("path", path);
+        this.buffer.put("type", type);
 
-        printToGUI("deu bom");
-        try {
-            disablePane("addFileGlobal");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        if (type.equals("book")) {
-
+        if (type.equals("Book")) {
+            try {
+                disablePane("#addFileGlobalPane");
+                enablePane("#addBookPane");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         // Send to backend logic here
-    }
-
-    private String addBook() {
-        String subtitle = subtitlefield.getText();
-        String fieldofknowledge = fieldofknowledgefield.getText();
-        String publisher = publisherfield.getText();
-        String publishyear = publishyearfield.getText();
-
-        if (subtitle.isEmpty() || fieldofknowledge.isEmpty() || publishyear.isEmpty() || publisher.isEmpty()) {
-            showAlert("Please fill all fields.");
-            return null;
-        }
-
-        return null;
     }
 
     private void disablePane(String id) throws IOException {
@@ -87,6 +89,31 @@ public class AddFileController {
             node.setDisable(true);
             node.setVisible(false);
         }
+    }
+
+    @FXML
+    private void addBook(ActionEvent event) {
+        String subtitle = subtitlefield.getText();
+        String fieldofknowledge = fieldofknowledgefield.getText();
+        String publisher = publisherfield.getText();
+        String publishyear = publishyearfield.getText();
+
+        if (subtitle.isEmpty() || fieldofknowledge.isEmpty() || publishyear.isEmpty() || publisher.isEmpty()) {
+            showAlert("Please fill all fields.");
+            return;
+        }
+
+        this.buffer.put("subTitle", subtitle);
+        this.buffer.put("fieldOfKnowledge", fieldofknowledge);
+        this.buffer.put("publisher", publisher);
+        this.buffer.put("publishYear", publishyear);
+        try {
+            disablePane("#addBookPane");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        String output = ui.addToDbFromGUI(this.buffer);
+        printToGUI(output);
     }
 
     private void enablePane(String id) throws IOException {
