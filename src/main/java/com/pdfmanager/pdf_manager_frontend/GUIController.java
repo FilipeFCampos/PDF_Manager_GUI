@@ -43,15 +43,6 @@ public class GUIController {
         stage.show();
     }
 
-    @FXML
-    protected void addFile(ActionEvent event) throws IOException {
-        //buffer = ui.test();
-        //printToGUI(buffer);
-        //disablePane("#options");
-        //enablePane("#addFileGlobal");
-        switchToAddFileScene(event);
-    }
-
     private void disablePane(String id) throws IOException {
         Node node = stackPane.lookup(id);
         if (node != null) {

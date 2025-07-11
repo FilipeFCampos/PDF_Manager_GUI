@@ -4,18 +4,19 @@ import com.pdfmanager.pdf_manager_backend.cli.UserInterface;
 import com.pdfmanager.pdf_manager_backend.db.DatabaseManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AddFileController {
     @FXML RadioButton bookrb;
@@ -30,7 +31,8 @@ public class AddFileController {
     @FXML TextField publisherfield;
     @FXML TextField publishyearfield;
     Map<String, Object> buffer = new HashMap<>();
-    @FXML public Text output;
+    @FXML public Text outputField;
+    private String outputData;
     private UserInterface ui;
 
     public AddFileController() {
@@ -83,6 +85,19 @@ public class AddFileController {
         // Send to backend logic here
     }
 
+    private void switchToMenuScene(ActionEvent event) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("menu.fxml"));
+        Parent root = loader.load();
+
+        showAlert(this.outputData);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 480, 480);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     private void disablePane(String id) throws IOException {
         Node node = stackPane.lookup(id);
         if (node != null) {
@@ -112,8 +127,12 @@ public class AddFileController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        String output = ui.addToDbFromGUI(this.buffer);
-        printToGUI(output);
+        this.outputData = ui.addToDbFromGUI(this.buffer);
+        try {
+            switchToMenuScene(event);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void enablePane(String id) throws IOException {
@@ -132,7 +151,7 @@ public class AddFileController {
         alert.showAndWait();
     }
 
-    public void printToGUI(String content) {
-        output.setText(content);
-    }
+    //public void printToGUI(String content) {
+    //    outputField.setText(content);
+    //}
 }

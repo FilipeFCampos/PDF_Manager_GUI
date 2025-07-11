@@ -43,11 +43,11 @@
                   <TextField fx:id="publishyearfield" />
                   <Label layoutX="10.0" layoutY="138.0" text="Publisher" />
                   <TextField fx:id="publisherfield" layoutX="10.0" layoutY="166.0" />
-                  <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#addBook" text="Next" />
+                  <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#addBook" text="Submit" />
                </children>
             </VBox>
             </children>
         </StackPane>
-      <Text fx:id="output" layoutX="95.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.32421875" />
+      <Text fx:id="outputField" layoutX="95.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.32421875" />
     </children>
 </AnchorPane>

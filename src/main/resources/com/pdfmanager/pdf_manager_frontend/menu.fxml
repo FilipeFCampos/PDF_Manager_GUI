@@ -20,7 +20,7 @@
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Text>
-                  <RadioButton mnemonicParsing="false" onAction="#addFile" text="Add file" />
+                  <RadioButton mnemonicParsing="false" onAction="#switchToAddFileScene" text="Add file" />
                   <RadioButton mnemonicParsing="false" text="List files" />
                   <RadioButton mnemonicParsing="false" text="Remove file" />
                   <RadioButton mnemonicParsing="false" text="Change library" />

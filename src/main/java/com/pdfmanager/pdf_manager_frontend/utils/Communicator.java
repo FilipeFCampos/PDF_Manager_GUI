@@ -29,7 +29,7 @@ public class Communicator {
     }
 
     public void printToGUI(String content) {
-        Text output = (Text) root.lookup("#output");
+        Text output = (Text) root.lookup("#outputField");
         if (output != null) {
             Platform.runLater(() -> output.setText(content));
         }
@@ -37,6 +37,6 @@ public class Communicator {
         Stage newStage = new Stage();
         newStage.setScene(newScene);
         newStage.show();
-        //controller.output.setText(content);
+        //controller.outputField.setText(content);
     }
 }

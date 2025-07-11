@@ -389,7 +389,7 @@ public class UserInterface {
                 System.err.println("Book collection not found.");
                 return;
             }
-            System.out.print("Enter the full output path (e.g., C:/Users/Me/Desktop/references.bib): ");
+            System.out.print("Enter the full outputField path (e.g., C:/Users/Me/Desktop/references.bib): ");
             Path outputPath = Paths.get(scanner.nextLine());
 
             // CORREÇÃO: Lê o arquivo de livros usando a classe correta (Book)
@@ -429,7 +429,7 @@ public class UserInterface {
                 System.err.println("Collection not found.");
                 return;
             }
-            System.out.print("Enter the full output path for the zip file (e.g., C:/Users/Me/Desktop/package.zip): ");
+            System.out.print("Enter the full outputField path for the zip file (e.g., C:/Users/Me/Desktop/package.zip): ");
             Path outputPath = Paths.get(scanner.nextLine());
 
             ObjectMapper mapper = new ObjectMapper();
