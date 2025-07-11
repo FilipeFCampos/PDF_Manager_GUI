@@ -36,7 +36,7 @@
             <VBox fx:id="addBookPane" disable="true" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" visible="false">
                <children>
                   <Label text="Subtitle" />
-                  <TextField fx:id="subtitlefield" />
+                  <TextField fx:id="subtitlefieldB" />
                   <Label text="Field of knowledge" />
                   <TextField fx:id="fieldofknowledgefield" />
                   <Label text="Publish year" />
@@ -46,8 +46,27 @@
                   <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#addBook" text="Submit" />
                </children>
             </VBox>
+            <VBox fx:id="addClassNotePane" disable="true" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" visible="false">
+               <children>
+                  <Label text="Subtitle" />
+                  <TextField fx:id="subtitlefieldCN" />
+                  <Label text="Lecture name" />
+                  <TextField fx:id="lecturenamefieldCN" />
+                  <Label text="Institution name" />
+                  <TextField fx:id="institutionnamefieldCN" />
+                  <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#addClassNote" text="Submit" />
+               </children>
+            </VBox>
+            <VBox fx:id="addSlidePane" disable="true" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" visible="false">
+               <children>
+                  <Label text="Lecture name" />
+                  <TextField fx:id="lecturenamefieldS" />
+                  <Label text="Institution name" />
+                  <TextField fx:id="institutionnamefieldS" />
+                  <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#addSlide" text="Submit" />
+               </children>
+            </VBox>
             </children>
         </StackPane>
-      <Text fx:id="outputField" layoutX="95.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.32421875" />
     </children>
 </AnchorPane>

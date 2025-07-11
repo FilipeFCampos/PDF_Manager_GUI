@@ -19,19 +19,30 @@ import java.io.IOException;
 import java.util.*;
 
 public class AddFileController {
+    // Radio buttons for selecting the type of file
     @FXML RadioButton bookrb;
     @FXML RadioButton classnoterb;
     @FXML RadioButton sliderb;
+    // Common fields for all types
     @FXML TextField titlefield;
     @FXML TextField pathfield;
     @FXML TextField authorsfield;
+    // StackPane to manage different panes
     @FXML StackPane stackPane;
+    // Fields specific to Book
     @FXML TextField fieldofknowledgefield;
-    @FXML TextField subtitlefield;
+    @FXML TextField subtitlefieldB;
     @FXML TextField publisherfield;
     @FXML TextField publishyearfield;
+    // Fields specific to ClassNote
+    @FXML TextField subtitlefieldCN;
+    @FXML TextField lecturenamefieldCN;
+    @FXML TextField institutionnamefieldCN;
+    // Fields specific to Slide
+    @FXML TextField lecturenamefieldS;
+    @FXML TextField institutionnamefieldS;
+    // Buffer to hold data before submission
     Map<String, Object> buffer = new HashMap<>();
-    @FXML public Text outputField;
     private String outputData;
     private UserInterface ui;
 
@@ -81,8 +92,21 @@ public class AddFileController {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+        } else if (type.equals("ClassNote")) {
+            try {
+                disablePane("#addFileGlobalPane");
+                enablePane("#addClassNotePane");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (type.equals("Slide")) {
+            try {
+                disablePane("#addFileGlobalPane");
+                enablePane("#addSlidePane");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
-        // Send to backend logic here
     }
 
     private void switchToMenuScene(ActionEvent event) throws IOException {
@@ -108,7 +132,7 @@ public class AddFileController {
 
     @FXML
     private void addBook(ActionEvent event) {
-        String subtitle = subtitlefield.getText();
+        String subtitle = subtitlefieldB.getText();
         String fieldofknowledge = fieldofknowledgefield.getText();
         String publisher = publisherfield.getText();
         String publishyear = publishyearfield.getText();
@@ -135,6 +159,58 @@ public class AddFileController {
         }
     }
 
+    @FXML
+    private void addClassNote(ActionEvent event) {
+        String subtitle = subtitlefieldCN.getText();
+        String lectureName = lecturenamefieldCN.getText();
+        String institutionName = institutionnamefieldCN.getText();
+
+        if (subtitle.isEmpty() || institutionName.isEmpty() || lectureName.isEmpty()) {
+            showAlert("Please fill all fields.");
+            return;
+        }
+
+        this.buffer.put("subTitle", subtitle);
+        this.buffer.put("lectureName", lectureName);
+        this.buffer.put("institutionName", institutionName);
+        try {
+            disablePane("#addClassNotePane");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        this.outputData = ui.addToDbFromGUI(this.buffer);
+        try {
+            switchToMenuScene(event);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    private void addSlide(ActionEvent event) {
+        String lectureName = lecturenamefieldS.getText();
+        String institutionName = institutionnamefieldS.getText();
+
+        if (lectureName.isEmpty() || institutionName.isEmpty()) {
+            showAlert("Please fill all fields.");
+            return;
+        }
+
+        this.buffer.put("lectureName", lectureName);
+        this.buffer.put("institutionName", institutionName);
+        try {
+            disablePane("#addSlidePane");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        this.outputData = ui.addToDbFromGUI(this.buffer);
+        try {
+            switchToMenuScene(event);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private void enablePane(String id) throws IOException {
         Node node = stackPane.lookup(id);
         if (node != null) {
@@ -150,8 +226,4 @@ public class AddFileController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-    //public void printToGUI(String content) {
-    //    outputField.setText(content);
-    //}
 }
