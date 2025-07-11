@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="480.0" prefWidth="488.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pdfmanager.pdf_manager_frontend.AddFileController">
+    <children>
+        <Text layoutX="95.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\\o/ PDF MANAGER \o/" textAlignment="CENTER">
+            <font>
+                <Font name="Arial Bold" size="28.0" />
+            </font>
+        </Text>
+        <StackPane fx:id="stackPane" layoutX="95.0" layoutY="128.0" prefHeight="176.0" prefWidth="289.0">
+            <children>
+                <VBox fx:id="addFileGlobal" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                    <children>
+                        <Label text="Document type:" />
+                        <HBox prefHeight="22.0" prefWidth="289.0" spacing="40.0">
+                            <children>
+                                <RadioButton fx:id="bookrb" mnemonicParsing="false" text="Book">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="documenttype" />
+                           </toggleGroup></RadioButton>
+                                <RadioButton fx:id="classnoterb" mnemonicParsing="false" text="Class note" toggleGroup="$documenttype" />
+                                <RadioButton fx:id="sliderb" mnemonicParsing="false" text="Slide" toggleGroup="$documenttype" />
+                            </children></HBox>
+                        <Label text="Write the path:" />
+                        <TextField fx:id="pathfield" />
+                        <Label text="Title:" />
+                        <TextField fx:id="titlefield" />
+                        <Label text="Authors (separated by commas):" />
+                        <TextField fx:id="authorsfield" />
+                  <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#submit" text="Next" />
+                    </children></VBox>
+            </children>
+        </StackPane>
+      <Text fx:id="output" layoutX="95.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.32421875" />
+    </children>
+</AnchorPane>

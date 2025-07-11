@@ -12,7 +12,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -20,6 +19,7 @@ public class GUIController {
 
     private UserInterface ui;
     private Parent root;
+    private String buffer;
     @FXML private StackPane stackPane;
     @FXML public Text output;
 
@@ -35,8 +35,8 @@ public class GUIController {
     }
 
     @FXML
-    protected void switchToMenuScene(ActionEvent event) throws IOException {
-        this.root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("options.fxml")));
+    protected void switchToAddFileScene(ActionEvent event) throws IOException {
+        this.root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("addFile.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 480, 480);
         stage.setScene(scene);
@@ -45,8 +45,11 @@ public class GUIController {
 
     @FXML
     protected void addFile(ActionEvent event) throws IOException {
-        disablePane("#options");
-        enablePane("#addFileGlobal");
+        //buffer = ui.test();
+        //printToGUI(buffer);
+        //disablePane("#options");
+        //enablePane("#addFileGlobal");
+        switchToAddFileScene(event);
     }
 
     private void disablePane(String id) throws IOException {

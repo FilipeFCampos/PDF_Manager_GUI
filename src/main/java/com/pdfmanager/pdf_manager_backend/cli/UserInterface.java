@@ -138,6 +138,10 @@ public class UserInterface {
         System.exit(0);
     }
 
+    public String test() {
+        return "Some content";
+    }
+
     // =================================================================================
     // MÉTODOS DE COLEÇÃO ADICIONADOS
     // =================================================================================
