@@ -46,6 +46,7 @@ public class GUIController {
     @FXML
     protected void addFile(ActionEvent event) throws IOException {
         disablePane("#options");
+        enablePane("#addFileGlobal");
     }
 
     private void disablePane(String id) throws IOException {
