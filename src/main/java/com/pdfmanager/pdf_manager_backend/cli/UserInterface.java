@@ -12,7 +12,7 @@ import com.pdfmanager.pdf_manager_backend.files.Slide;
 import com.pdfmanager.pdf_manager_backend.utils.BibTexGenerator;
 import com.pdfmanager.pdf_manager_backend.utils.CollectionPackager;
 import com.pdfmanager.pdf_manager_backend.utils.FileManager;
-import com.pdfmanager.pdf_manager_frontend.utils.Communicator;
+import com.pdfmanager.pdf_manager_backend.utils.GUIException;
 import io.restassured.path.json.JsonPath;
 
 import java.io.File;
@@ -29,7 +29,6 @@ public class UserInterface {
     private final FileManager fileManager;
     private final DatabaseManager db;
     private final File configPath;
-    private Communicator communicator;
 
     // Colored text constants
     public static final String RESET = "\u001B[0m";
@@ -1023,6 +1022,25 @@ public class UserInterface {
                 System.err.println("Unknown option: '" + input2 + "'");
                 editLibraryPath();
             }
+        }
+    }
+
+    public void editLibraryPathFromGUI(String newPath, String libraryName, boolean existingLibrary) throws GUIException {
+        // This method is used by the GUI to edit the library path.
+        // It receives a new path and returns a success message or an error message.
+        if (fileManager.evaluatePath(newPath)) {
+            updateConfig("libraryPath", newPath);
+        } else {
+            throw new GUIException("ERROR: Invalid path provided.");
+        }
+        if (fileManager.createDirectory(newPath, libraryName)) {
+            updateConfig("libraryPath", newPath + File.separator + libraryName);
+            updateConfig("isFirstAccess", "false");
+        } else if (existingLibrary) {
+            updateConfig("libraryPath", newPath + File.separator + libraryName);
+            updateConfig("isFirstAccess", "false");
+        } else {
+            throw new GUIException("'Use existing library' option not set, please try again.");
         }
     }
 

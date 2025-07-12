@@ -11,7 +11,24 @@ import java.io.IOException;
 public class GUI extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(GUI.class.getResource("menu.fxml"));
+        DatabaseManager db;
+        try {
+            db = new DatabaseManager();
+        } catch (Exception e) {
+            System.err.println("ERROR: Invalid database path");
+            return;
+        }
+        UserInterface ui = new UserInterface(db);
+        FXMLLoader fxmlLoader;
+        if (ui.checkFirstAccess()) {
+            fxmlLoader = new FXMLLoader(GUI.class.getResource("firstAccess.fxml"));
+        } else {
+            fxmlLoader = new FXMLLoader(GUI.class.getResource("menu.fxml"));
+        }
+        loadScene(fxmlLoader, stage);
+    }
+
+    private void loadScene(FXMLLoader fxmlLoader, Stage stage) throws IOException {
         Scene scene = new Scene(fxmlLoader.load(), 480, 480);
         stage.setResizable(false);
         stage.setTitle("PDF Manager");
