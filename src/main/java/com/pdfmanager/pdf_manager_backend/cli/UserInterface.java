@@ -772,13 +772,22 @@ public class UserInterface {
         }
     }
 
-    public String addToDbFromGUI(Map<String, Object> data) {
-        // This method is used by the GUI to add a file to the database.
-        // It receives a map with the data and returns a success message or an error message.
+    /**
+     * Adds a file to the database from the GUI.
+     * @param data The data map containing the file information.
+     * @return
+     * @throws GUIException
+     * @throws IOException
+     */
+    public String addToDbFromGUI(Map<String, Object> data) throws GUIException {
+
+        // Check if data is null or empty
         if (data == null || data.isEmpty()) {
-            return "ERROR: No data provided.";
+            throw new GUIException("ERROR: No data provided.");
         }
 
+        // Tries to write the json object in the database, if successful, copies file to library.
+        // TODO: Validate the file path before writing to the database.
         if (db.writeObject(data)) {
             String title = data.get("title").toString();
             String type = data.get("type").toString();
@@ -789,12 +798,12 @@ public class UserInterface {
             try {
                 addToLibrary(title, path);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new GUIException("ERROR: Failed to add file to library");
             }
             return "File '" + title + "' added successfully to the database.";
         }
 
-        return "ERROR: Failed to add file to database.";
+        throw new GUIException("ERROR: Failed to add file to database.");
     }
 
     /**
@@ -1025,21 +1034,32 @@ public class UserInterface {
         }
     }
 
+    /**
+     * Edits the library path from the GUI.
+     * @param newPath The new path to set for the library.
+     * @param libraryName The name of the library to be created or used.
+     * @param existingLibrary If true, the method will try to use an existing library.
+     * @throws GUIException
+     */
     public void editLibraryPathFromGUI(String newPath, String libraryName, boolean existingLibrary) throws GUIException {
-        // This method is used by the GUI to edit the library path.
-        // It receives a new path and returns a success message or an error message.
+        // Check if the new path is valid
         if (fileManager.evaluatePath(newPath)) {
             updateConfig("libraryPath", newPath);
         } else {
             throw new GUIException("ERROR: Invalid path provided.");
         }
+        // Tries to create a NEW directory with the specified library name, if successful, updates the config.
         if (fileManager.createDirectory(newPath, libraryName)) {
             updateConfig("libraryPath", newPath + File.separator + libraryName);
             updateConfig("isFirstAccess", "false");
         } else if (existingLibrary) {
+            // If the directory already exists and the user wants to use an existing library, update the config.
             updateConfig("libraryPath", newPath + File.separator + libraryName);
             updateConfig("isFirstAccess", "false");
         } else {
+            // If the user does not want to use an existing library, and the 'Use existing library' option is
+            // not checked, throws an exception prompting the user to try again (ideally, this should be
+            // displayed as an alert message from the GUI).
             throw new GUIException("'Use existing library' option not set, please try again.");
         }
     }
