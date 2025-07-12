@@ -11,6 +11,7 @@ import java.io.IOException;
 public class GUI extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws IOException {
+        // Initialize the database manager
         DatabaseManager db;
         try {
             db = new DatabaseManager();
@@ -18,16 +19,25 @@ public class GUI extends javafx.application.Application {
             System.err.println("ERROR: Invalid database path");
             return;
         }
+        // Loads the user interface to check whether it's the user's first access or not
         UserInterface ui = new UserInterface(db);
         FXMLLoader fxmlLoader;
         if (ui.checkFirstAccess()) {
+            // If it's the user's first access, load the first access scene
             fxmlLoader = new FXMLLoader(GUI.class.getResource("firstAccess.fxml"));
         } else {
+            // If it's not the user's first access, load the main menu scene
             fxmlLoader = new FXMLLoader(GUI.class.getResource("menu.fxml"));
         }
         loadScene(fxmlLoader, stage);
     }
 
+    /**
+     * Loads the scene for the given FXML loader and stage.
+     * @param fxmlLoader
+     * @param stage
+     * @throws IOException
+     */
     private void loadScene(FXMLLoader fxmlLoader, Stage stage) throws IOException {
         Scene scene = new Scene(fxmlLoader.load(), 480, 480);
         stage.setResizable(false);

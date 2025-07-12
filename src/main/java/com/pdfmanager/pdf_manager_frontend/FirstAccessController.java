@@ -40,23 +40,33 @@ public class FirstAccessController {
         this.ui = new UserInterface(db);
     }
 
+    /**
+     * Handles the action of the save button, i.e. Validates the input fields and
+     * attempts to set the library path and name.
+     * @param event
+     */
     @FXML
     private void saveButtonAction(ActionEvent event) {
+        // Validate input fields
         String libraryPath = librarypathfield.getText();
         String libraryName = librarynamefield.getText();
 
+        // Check if fields are empty
         if (libraryPath.isEmpty() || libraryName.isEmpty()) {
             showAlert("Please fill in all fields.");
             return;
         }
 
         try {
+            // Tries to update the config file with the provided library path and name
             ui.editLibraryPathFromGUI(libraryPath, libraryName, existinglibrarycb.isSelected());
         } catch (GUIException e) {
+            // If unable to perform operation, show an alert with the error message
             showAlert(e.getMessage());
             return;
         }
 
+        // If successful, show a success message and switch to the menu scene
         showAlert("Library added successfully!! Path: " + libraryPath + File.separator + libraryName);
         try {
             switchToMenuScene(event);
@@ -65,6 +75,10 @@ public class FirstAccessController {
         }
     }
 
+    /**
+     * Warns the user of the potential consequences of using an existing library.
+     * Shows up only if the checkbox is selected and the library name field is not empty.
+     */
     @FXML
     private void existingPathWarning() {
         if (existinglibrarycb.isSelected() && !librarynamefield.getText().isEmpty()) {
@@ -76,6 +90,11 @@ public class FirstAccessController {
 
     }
 
+    /**
+     * Switches to the menu scene after successfully saving the library path and name.
+     * @param event
+     * @throws IOException
+     */
     private void switchToMenuScene(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("menu.fxml"));
         Parent root = loader.load();
@@ -86,6 +105,10 @@ public class FirstAccessController {
         stage.show();
     }
 
+    /**
+     * Displays an alert with the provided message.
+     * @param message Message to be displayed in the alert.
+     */
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Validation");

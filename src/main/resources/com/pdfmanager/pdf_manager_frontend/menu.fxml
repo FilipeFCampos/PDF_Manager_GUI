@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pdfmanager.pdf_manager_frontend.GUIController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pdfmanager.pdf_manager_frontend.MenuController">
    <children>
       <Text layoutX="95.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\\o/ PDF MANAGER \o/" textAlignment="CENTER">
          <font>
@@ -46,6 +46,5 @@
                </children></VBox>
          </children>
       </StackPane>
-      <Text fx:id="output" layoutX="95.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.0" />
    </children>
 </AnchorPane>
