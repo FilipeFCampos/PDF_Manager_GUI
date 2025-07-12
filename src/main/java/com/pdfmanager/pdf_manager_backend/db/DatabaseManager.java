@@ -13,7 +13,6 @@ import io.restassured.path.json.JsonPath;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static com.pdfmanager.pdf_manager_backend.cli.UserInterface.*;
 

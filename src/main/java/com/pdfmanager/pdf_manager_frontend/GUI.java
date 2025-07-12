@@ -9,6 +9,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class GUI extends javafx.application.Application {
+    /**
+     * Starts the JavaFX application.
+     * Initializes the database manager and loads the user interface based on whether it's the user's first access.
+     * @param stage The primary stage for this application, onto which the application scene can be set.
+     * @throws IOException If an I/O error occurs during loading of FXML files.
+     */
     @Override
     public void start(Stage stage) throws IOException {
         // Initialize the database manager
@@ -29,6 +35,7 @@ public class GUI extends javafx.application.Application {
             // If it's not the user's first access, load the main menu scene
             fxmlLoader = new FXMLLoader(GUI.class.getResource("menu.fxml"));
         }
+        // Load the scene with the FXML loader and set the stage
         loadScene(fxmlLoader, stage);
     }
 
@@ -39,12 +46,19 @@ public class GUI extends javafx.application.Application {
      * @throws IOException
      */
     private void loadScene(FXMLLoader fxmlLoader, Stage stage) throws IOException {
+        // Load the FXML file and set the scene within a 480x480 window
         Scene scene = new Scene(fxmlLoader.load(), 480, 480);
+        // By design, the window is not resizable
         stage.setResizable(false);
+        // Set the title of the window and the scene
         stage.setTitle("PDF Manager");
         stage.setScene(scene);
         stage.show();
     }
 
+    /**
+     * Main method to launch the JavaFX application.
+     * @param args
+     */
     public static void main(String[] args) { launch(); }
 }
