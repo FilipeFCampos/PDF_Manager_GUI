@@ -82,7 +82,7 @@ public class FirstAccessController {
     @FXML
     private void existingPathWarning() {
         if (existinglibrarycb.isSelected() && !librarynamefield.getText().isEmpty()) {
-            warningfield.setText("WARNING: Keep in mind that any data present in'"
+            warningfield.setText("WARNING: Keep in mind that any data present in '"
                     + librarynamefield.getText() + "' might be altered.");
         } else {
             warningfield.setText("");

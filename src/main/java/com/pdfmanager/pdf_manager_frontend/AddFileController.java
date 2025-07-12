@@ -134,7 +134,10 @@ public class AddFileController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("menu.fxml"));
         Parent root = loader.load();
 
-        showAlert(this.outputData);
+        // If outputData is NOT null or empty, show an alert with the output data
+        if (!(this.outputData == null) && !this.outputData.isEmpty()) {
+            showAlert(this.outputData);
+        }
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 480, 480);

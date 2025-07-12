@@ -777,33 +777,39 @@ public class UserInterface {
      * @param data The data map containing the file information.
      * @return
      * @throws GUIException
-     * @throws IOException
      */
     public String addToDbFromGUI(Map<String, Object> data) throws GUIException {
 
-        // Check if data is null or empty
+        // Check if data is null or empty.
         if (data == null || data.isEmpty()) {
             throw new GUIException("ERROR: No data provided.");
         }
-
-        // Tries to write the json object in the database, if successful, copies file to library.
-        // TODO: Validate the file path before writing to the database.
-        if (db.writeObject(data)) {
-            String title = data.get("title").toString();
-            String type = data.get("type").toString();
-            File path;
-            if (type.equals("Book")) path = db.getBooksPath();
-            else if (type.equals("ClassNote")) path = db.getClassNotesPath();
-            else path = db.getSlidesPath();
-            try {
-                addToLibrary(title, path);
-            } catch (IOException e) {
-                throw new GUIException("ERROR: Failed to add file to library");
-            }
-            return "File '" + title + "' added successfully to the database.";
+        // Checks if the file path is valid.
+        if (!fileManager.evaluatePath((String) data.get("path"))) {
+            throw new GUIException("ERROR: File path is invalid.");
         }
+        // Gets the title and type from the data map to use as parameters to the 'addToLibrary' function.
+        String title = data.get("title").toString();
+        String type = data.get("type").toString();
+        File path;
+        // Determines the database path based on the type of document.
+        if (type.equals("Book")) path = db.getBooksPath();
+        else if (type.equals("ClassNote")) path = db.getClassNotesPath();
+        else path = db.getSlidesPath();
 
-        throw new GUIException("ERROR: Failed to add file to database.");
+        // Tries to write the json object in the database and copy the file to the library.
+        try {
+            db.writeObject(data);
+        } catch (Exception e) {
+            throw new GUIException("ERROR: Failed to write object to the database");
+        }
+        try {
+            addToLibrary(title, path);
+        } catch (IOException e) {
+            throw new GUIException("ERROR: Failed to copy file to library.");
+        }
+        // If everything goes well, returns a success message.
+        return "File '" + title + "' added successfully to the database.";
     }
 
     /**
@@ -1039,7 +1045,8 @@ public class UserInterface {
      * @param newPath The new path to set for the library.
      * @param libraryName The name of the library to be created or used.
      * @param existingLibrary If true, the method will try to use an existing library.
-     * @throws GUIException
+     * @throws GUIException If the new path is invalid or if the library cannot be created or used.
+     * GUIExceptions should be displayed as alert messages in the GUI.
      */
     public void editLibraryPathFromGUI(String newPath, String libraryName, boolean existingLibrary) throws GUIException {
         // Check if the new path is valid
@@ -1057,10 +1064,11 @@ public class UserInterface {
             updateConfig("libraryPath", newPath + File.separator + libraryName);
             updateConfig("isFirstAccess", "false");
         } else {
-            // If the user does not want to use an existing library, and the 'Use existing library' option is
+            // If the user directory already exists in the path, but the 'Use existing library' option is
             // not checked, throws an exception prompting the user to try again (ideally, this should be
             // displayed as an alert message from the GUI).
-            throw new GUIException("'Use existing library' option not set, please try again.");
+            throw new GUIException("'" + libraryName + "' exists in path, but 'Use existing library' " +
+                    "option wasn't set, please try again.");
         }
     }
 
