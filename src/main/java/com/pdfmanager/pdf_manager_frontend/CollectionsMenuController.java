@@ -28,4 +28,13 @@ public class CollectionsMenuController {
         stage.setScene(new Scene(root, 500, 600)); // Ajuste o tamanho conforme necessário
         stage.show();
     }
+
+    @FXML
+    private void handleListCollections(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("listCollections.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setResizable(true); // Permite redimensionar
+        stage.setScene(new Scene(root, 800, 600));
+        stage.show();
+    }
 }

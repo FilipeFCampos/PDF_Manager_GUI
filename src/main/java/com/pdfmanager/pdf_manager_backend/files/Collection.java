@@ -1,4 +1,5 @@
 package com.pdfmanager.pdf_manager_backend.files;
+import javafx.beans.property.SimpleObjectProperty;
 
 import java.util.List;
 
@@ -44,6 +45,10 @@ public class Collection {
 
     public void setType(DocumentType type) {
         this.type = type;
+    }
+
+    public SimpleObjectProperty<DocumentType> typeProperty() {
+        return new SimpleObjectProperty<>(this.type);
     }
 
     public int getMaxSize() {

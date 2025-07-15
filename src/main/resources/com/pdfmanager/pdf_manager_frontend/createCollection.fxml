@@ -63,7 +63,7 @@
                                 </HBox>
                             </children>
                         </GridPane>
-                        <Button onAction="#handleFindDocuments" text="Buscar Documentos" />
+                        <Button onAction="#handleFindDocuments" text="Selecione Documentos" />
                     </children>
                 </VBox>
                 <VBox fx:id="step2Pane" alignment="TOP_CENTER" spacing="15.0">
