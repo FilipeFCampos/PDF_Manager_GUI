@@ -13,12 +13,13 @@ import com.pdfmanager.pdf_manager_backend.utils.BibTexGenerator;
 import com.pdfmanager.pdf_manager_backend.utils.CollectionPackager;
 import com.pdfmanager.pdf_manager_backend.utils.FileManager;
 import com.pdfmanager.pdf_manager_backend.utils.GUIException;
+
+import java.nio.file.*;
+
 import io.restassured.path.json.JsonPath;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -1049,26 +1050,79 @@ public class UserInterface {
      * GUIExceptions should be displayed as alert messages in the GUI.
      */
     public void editLibraryPathFromGUI(String newPath, String libraryName, boolean existingLibrary) throws GUIException {
-        // Check if the new path is valid
-        if (fileManager.evaluatePath(newPath)) {
-            updateConfig("libraryPath", newPath);
-        } else {
-            throw new GUIException("ERROR: Invalid path provided.");
+        if (!fileManager.evaluatePath(newPath)) {
+            throw new GUIException("ERRO: O caminho base fornecido é inválido.");
         }
-        // Tries to create a NEW directory with the specified library name, if successful, updates the config.
+
+        String oldLibraryFullPath;
+        try {
+            oldLibraryFullPath = db.getLibraryPath();
+        } catch (IOException e) {
+            throw new GUIException("ERRO: Não foi possível ler o caminho da biblioteca antiga.");
+        }
+        String newLibraryFullPath = newPath + File.separator + libraryName;
+
+        if (newLibraryFullPath.equals(oldLibraryFullPath)) {
+            throw new GUIException("A nova biblioteca é a mesma que a atual. Nenhuma alteração feita.");
+        }
+
         if (fileManager.createDirectory(newPath, libraryName)) {
-            updateConfig("libraryPath", newPath + File.separator + libraryName);
-            updateConfig("isFirstAccess", "false");
-        } else if (existingLibrary) {
-            // If the directory already exists and the user wants to use an existing library, update the config.
-            updateConfig("libraryPath", newPath + File.separator + libraryName);
-            updateConfig("isFirstAccess", "false");
+            System.out.println("Novo diretório de biblioteca criado em: " + newLibraryFullPath);
+
         } else {
-            // If the user directory already exists in the path, but the 'Use existing library' option is
-            // not checked, throws an exception prompting the user to try again (ideally, this should be
-            // displayed as an alert message from the GUI).
-            throw new GUIException("'" + libraryName + "' exists in path, but 'Use existing library' " +
-                    "option wasn't set, please try again.");
+            // A criação falhou, provavelmente porque o diretório já existe.
+            if (existingLibrary) {
+                // O usuário marcou que quer usar o diretório existente.
+                System.out.println("Usando diretório de biblioteca existente em: " + newLibraryFullPath);
+            } else {
+                // O diretório existe, mas o usuário não marcou a opção. Lança um erro.
+                throw new GUIException("O diretório '" + libraryName + "' já existe neste caminho. " +
+                        "Se deseja usá-lo, marque a opção 'Usar biblioteca existente'.");
+            }
+        }
+
+        try {
+            moveLibraryContents(oldLibraryFullPath, newLibraryFullPath);
+        } catch (IOException e) {
+            throw new GUIException("ERRO: Falha ao mover os arquivos da biblioteca antiga para a nova. Detalhes: " + e.getMessage());
+        }
+
+        //Se tudo deu certo, atualiza o arquivo de configuração.
+        updateConfig("libraryPath", newLibraryFullPath);
+        updateConfig("isFirstAccess", "false");
+    }
+
+    /**
+     * @param oldLibraryPath
+     * @param newLibraryPath
+     * @throws IOException
+     */
+    private void moveLibraryContents(String oldLibraryPath, String newLibraryPath) throws IOException {
+        Path oldPath = Paths.get(oldLibraryPath);
+        Path newPath = Paths.get(newLibraryPath);
+
+        if (!Files.exists(oldPath) || !Files.isDirectory(oldPath)) {
+            System.out.println("Biblioteca antiga não encontrada ou não é um diretório. Nada a mover.");
+            return;
+        }
+
+        // Usando DirectoryStream para iterar sobre o conteúdo da pasta antiga (diretórios dos autores)
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(oldPath)) {
+            for (Path authorDir : stream) {
+                if (Files.isDirectory(authorDir)) {
+                    Path destinationDir = newPath.resolve(authorDir.getFileName());
+                    System.out.println("Movendo de " + authorDir + " para " + destinationDir);
+                    Files.move(authorDir, destinationDir, StandardCopyOption.REPLACE_EXISTING);
+                }
+            }
+        }
+        System.out.println("Conteúdo da biblioteca movido com sucesso.");
+
+        try {
+            Files.deleteIfExists(oldPath);
+            System.out.println("Diretório da biblioteca antiga removido.");
+        } catch (IOException e) {
+            System.err.println("Aviso: Não foi possível remover o diretório antigo (pode não estar vazio): " + e.getMessage());
         }
     }
 
