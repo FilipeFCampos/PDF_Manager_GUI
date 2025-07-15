@@ -23,9 +23,9 @@
             <children>
                 <Button prefHeight="40.0" onAction="#handleCreateCollection" mnemonicParsing="false" prefWidth="250.0" text="Criar Nova Coleção" />
                 <Button mnemonicParsing="false" onAction="#handleListCollections" prefHeight="40.0" prefWidth="250.0" text="Listar Coleções Existentes" />
-                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="Adicionar/Remover Itens de uma Coleção" />
-                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="Gerar Arquivo BibTeX (de Livros)" />
-                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="Empacotar Coleção (.zip)" />
+                <Button mnemonicParsing="false" onAction="#handleManageCollection" prefHeight="40.0" prefWidth="250.0" text="Adicionar/Remover Itens de uma Coleção" />
+                <Button mnemonicParsing="false" onAction="#handleGenerateBibtex" prefHeight="40.0" prefWidth="250.0" text="Gerar Arquivo BibTeX (de Livros)" />
+                <Button mnemonicParsing="false" onAction="#handlePackageCollection" prefHeight="40.0" prefWidth="250.0" text="Empacotar Coleção (.zip)" />
             </children>
         </VBox>
     </center>

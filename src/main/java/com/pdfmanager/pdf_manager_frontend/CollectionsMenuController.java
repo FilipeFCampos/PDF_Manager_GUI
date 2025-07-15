@@ -37,4 +37,31 @@ public class CollectionsMenuController {
         stage.setScene(new Scene(root, 800, 600));
         stage.show();
     }
+
+    @FXML
+    private void handleManageCollection(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("manageCollection.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setResizable(true);
+        stage.setScene(new Scene(root, 800, 600));
+        stage.show();
+    }
+
+    @FXML
+    private void handleGenerateBibtex(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("generateBibtex.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root, 600, 400));
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
+    private void handlePackageCollection(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("packageCollection.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root, 600, 400));
+        stage.setResizable(false);
+        stage.show();
+    }
 }
