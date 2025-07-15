@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Priority?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.pdfmanager.pdf_manager_frontend.ListFilesController">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+            <Label text="Arquivos da Biblioteca" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+            <Pane HBox.hgrow="ALWAYS" /> <Button onAction="#handleBackButton" text="Voltar" />
+        </HBox>
+    </top>
+
+    <center>
+        <TabPane>
+            <Tab closable="false" text="Livros">
+                <TableView fx:id="booksTable">
+                    <columns>
+                        <TableColumn fx:id="bookTitleColumn" prefWidth="250" text="Título" />
+                        <TableColumn fx:id="bookAuthorColumn" prefWidth="200" text="Autores" />
+                        <TableColumn fx:id="bookYearColumn" prefWidth="100" text="Ano" />
+                    </columns>
+                </TableView>
+            </Tab>
+
+            <Tab closable="false" text="Anotações de Aula">
+                <TableView fx:id="notesTable">
+                    <columns>
+                        <TableColumn fx:id="noteTitleColumn" prefWidth="250" text="Título" />
+                        <TableColumn fx:id="noteSubjectColumn" prefWidth="200" text="Disciplina" />
+                        <TableColumn fx:id="noteDateColumn" prefWidth="150" text="Instituição" />
+                    </columns>
+                </TableView>
+            </Tab>
+
+            <Tab closable="false" text="Slides">
+                <TableView fx:id="slidesTable">
+                    <columns>
+                        <TableColumn fx:id="slideTitleColumn" prefWidth="250" text="Título" />
+                        <TableColumn fx:id="slideTopicColumn" prefWidth="200" text="Disciplina" />
+                        <TableColumn fx:id="slideDateColumn" prefWidth="150" text="Instituição" />
+                    </columns>
+                </TableView>
+            </Tab>
+        </TabPane>
+    </center>
+
+</BorderPane>

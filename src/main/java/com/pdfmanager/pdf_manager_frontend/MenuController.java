@@ -33,4 +33,21 @@ public class MenuController {
         stage.show();
     }
 
+    @FXML
+    protected void switchToListFilesScene(ActionEvent event) throws IOException {
+        this.root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("listFiles.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 640, 480); // pode ajustar as dimensões
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    protected void switchToRemoveFilesScene(ActionEvent event) throws IOException {
+        this.root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("removeFiles.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root, 640, 480));
+        stage.show();
+    }
+
 }
