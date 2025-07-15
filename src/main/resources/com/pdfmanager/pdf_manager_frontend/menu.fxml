@@ -1,50 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pdfmanager.pdf_manager_frontend.MenuController">
-   <children>
-      <Text layoutX="95.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\\o/ PDF MANAGER \o/" textAlignment="CENTER">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pdfmanager.pdf_manager_frontend.MenuController">
+   <top>
+      <Label text="\\o/ PDF MANAGER \o/" BorderPane.alignment="CENTER">
          <font>
-            <Font name="Arial Bold" size="28.0" />
+            <Font name="System Bold" size="28.0" />
          </font>
-      </Text>
-      <StackPane fx:id="stackPane" layoutX="95.0" layoutY="128.0" prefHeight="176.0" prefWidth="289.0">
+         <padding>
+            <Insets bottom="10.0" top="30.0" />
+         </padding>
+      </Label>
+   </top>
+   <center>
+      <VBox alignment="CENTER" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox fx:id="options" prefHeight="200.0" prefWidth="289.0" spacing="10.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choose one of the options below:">
-                     <font>
-                        <Font name="Arial Bold" size="12.0" />
-                     </font>
-                  </Text>
-                  <RadioButton mnemonicParsing="false" onAction="#switchToAddFileScene" text="Add file" />
-                  <RadioButton mnemonicParsing="false" onAction="#switchToListFilesScene" text="List files" />
-                  <RadioButton mnemonicParsing="false" onAction="#switchToRemoveFilesScene" text="Remove file" />
-                  <RadioButton mnemonicParsing="false" onAction="#switchToChangeLibraryScene" text="Change library" />
-                  <RadioButton mnemonicParsing="false" onAction="#switchToEditFilesScene" text="Edit entry" />
-                  <RadioButton mnemonicParsing="false" text="Manage collections" />
-               </children>
-            </VBox>
-            <VBox fx:id="addFileGlobal" disable="true" prefHeight="200.0" prefWidth="100.0" spacing="10.0" visible="false">
-               <children>
-                  <Label text="Document type:" />
-                  <HBox prefHeight="22.0" prefWidth="289.0" spacing="40.0">
-                     <children>
-                        <RadioButton mnemonicParsing="false" text="Book" />
-                        <RadioButton mnemonicParsing="false" text="Class note" />
-                        <RadioButton mnemonicParsing="false" text="Slide" />
-                     </children></HBox>
-                  <Label text="Write the path:" />
-                  <TextField />
-                  <Label text="Title:" />
-                  <TextField />
-                  <Label text="Authors (separated by commas):" />
-                  <TextField />
-               </children></VBox>
+            <Button onAction="#switchToAddFileScene" prefHeight="40.0" prefWidth="250.0" text="Add file" />
+            <Button onAction="#switchToListFilesScene" prefHeight="40.0" prefWidth="250.0" text="List files" />
+            <Button onAction="#switchToRemoveFilesScene" prefHeight="40.0" prefWidth="250.0" text="Remove file" />
+            <Button onAction="#switchToChangeLibraryScene" prefHeight="40.0" prefWidth="250.0" text="Change library" />
+            <Button onAction="#switchToEditFilesScene" prefHeight="40.0" prefWidth="250.0" text="Edit entry" />
+            <Button onAction="#switchToCollectionsMenuScene" prefHeight="40.0" prefWidth="250.0" text="Manage collections" />
          </children>
-      </StackPane>
-   </children>
-</AnchorPane>
+      </VBox>
+   </center>
+</BorderPane>

@@ -67,4 +67,12 @@ public class MenuController {
         stage.setResizable(true);
         stage.show();
     }
+
+    @FXML
+    protected void switchToCollectionsMenuScene(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("collectionsMenu.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root, 480, 480));
+        stage.show();
+    }
 }
