@@ -4,18 +4,18 @@ import com.pdfmanager.pdf_manager_backend.files.Book;
 import com.pdfmanager.pdf_manager_backend.files.ClassNote;
 import com.pdfmanager.pdf_manager_backend.files.Slide;
 import com.pdfmanager.pdf_manager_backend.utils.DataLoader;
-import javafx.event.ActionEvent; // Adicionado
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader; // Adicionado
-import javafx.scene.Node; // Adicionado
-import javafx.scene.Parent; // Adicionado
-import javafx.scene.Scene; // Adicionado
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage; // Adicionado
+import javafx.stage.Stage;
 
-import java.io.IOException; // Adicionado
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 

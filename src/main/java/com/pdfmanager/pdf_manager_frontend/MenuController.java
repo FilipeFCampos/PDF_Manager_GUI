@@ -50,4 +50,12 @@ public class MenuController {
         stage.show();
     }
 
+    @FXML
+    protected void switchToChangeLibraryScene(ActionEvent event) throws IOException {
+        this.root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("changeLibrary.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 480, 480);
+        stage.setScene(scene);
+        stage.show();
+    }
 }
