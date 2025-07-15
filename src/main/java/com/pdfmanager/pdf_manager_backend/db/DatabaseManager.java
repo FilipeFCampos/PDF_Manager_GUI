@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.pdfmanager.pdf_manager_backend.files.Book;
 import com.pdfmanager.pdf_manager_backend.files.ClassNote;
-import com.pdfmanager.pdf_manager_backend.files.Collection; // Importação adicionada
+import com.pdfmanager.pdf_manager_backend.files.Collection;
 import com.pdfmanager.pdf_manager_backend.files.Slide;
 import io.restassured.path.json.JsonPath;
 
@@ -357,12 +357,61 @@ public class DatabaseManager {
         return classNotesPath;
     }
 
-    // Getter adicionado
     public File getCollectionsPath() {
         return collectionsPath;
     }
 
     public String getLibraryPath() throws IOException {
         return readField(configPath, "libraryPath");
+    }
+
+    /**
+     * @param dbPath O caminho do banco de dados.
+     * @param targetTitle O título do arquivo a ser editado.
+     * @param fieldToEdit O campo a ser modificado (ex: "subTitle", "publisher").
+     * @param newValue O novo valor para o campo.
+     * @throws IOException Lança exceção se houver erro de E/S.
+     * @throws IllegalArgumentException Se o campo não existir ou não for editável.
+     */
+    public void updateEntryField(File dbPath, String targetTitle, String fieldToEdit, String newValue) throws IOException, IllegalArgumentException {
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode db = (ArrayNode) mapper.readTree(dbPath);
+
+        boolean updated = false;
+        for (int i = 0; i < db.size(); i++) {
+            JsonNode node = db.get(i);
+            if (node.isObject() && node.has("title") && node.get("title").asText().equals(targetTitle)) {
+                ObjectNode objectNode = (ObjectNode) node;
+
+                if (fieldToEdit.equalsIgnoreCase("title")) {
+                    throw new IllegalArgumentException("O título não pode ser alterado.");
+                }
+                if (!objectNode.has(fieldToEdit)) {
+                    throw new IllegalArgumentException("O campo '" + fieldToEdit + "' não existe neste item.");
+                }
+
+                // Verifica o tipo do campo para fazer a conversão correta
+                JsonNode fieldNode = objectNode.get(fieldToEdit);
+                if (fieldNode.isInt()) {
+                    try {
+                        objectNode.put(fieldToEdit, Integer.parseInt(newValue));
+                    } catch (NumberFormatException e) {
+                        throw new IllegalArgumentException("O valor para '" + fieldToEdit + "' deve ser um número inteiro.");
+                    }
+                } else {
+                    objectNode.put(fieldToEdit, newValue);
+                }
+
+                db.set(i, objectNode);
+                updated = true;
+                break;
+            }
+        }
+
+        if (!updated) {
+            throw new IOException("Nenhum item encontrado com o título: " + targetTitle);
+        }
+
+        mapper.writerWithDefaultPrettyPrinter().writeValue(dbPath, db);
     }
 }

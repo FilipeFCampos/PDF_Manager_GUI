@@ -24,7 +24,7 @@
                   <RadioButton mnemonicParsing="false" onAction="#switchToListFilesScene" text="List files" />
                   <RadioButton mnemonicParsing="false" onAction="#switchToRemoveFilesScene" text="Remove file" />
                   <RadioButton mnemonicParsing="false" onAction="#switchToChangeLibraryScene" text="Change library" />
-                  <RadioButton mnemonicParsing="false" text="Edit entry" />
+                  <RadioButton mnemonicParsing="false" onAction="#switchToEditFilesScene" text="Edit entry" />
                   <RadioButton mnemonicParsing="false" text="Manage collections" />
                </children>
             </VBox>

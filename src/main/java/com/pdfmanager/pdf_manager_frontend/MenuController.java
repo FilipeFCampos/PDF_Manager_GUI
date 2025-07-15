@@ -58,4 +58,13 @@ public class MenuController {
         stage.setScene(scene);
         stage.show();
     }
+
+    @FXML
+    protected void switchToEditFilesScene(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("editFiles.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root, 800, 600));
+        stage.setResizable(true);
+        stage.show();
+    }
 }
