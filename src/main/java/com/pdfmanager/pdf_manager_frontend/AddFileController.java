@@ -57,6 +57,20 @@ public class AddFileController {
         this.ui = new UserInterface(db);
     }
 
+    @FXML
+    public void voltarGlobal(ActionEvent event) {
+        this.buffer.clear();
+        try {
+            // Disables the specific pane and enables the global pane
+            disablePane("#addBookPane");
+            disablePane("#addClassNotePane");
+            disablePane("#addSlidePane");
+            enablePane("#addFileGlobalPane");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * Handles the submission of the form, collecting data about the file to be added.
      * @param event
@@ -128,7 +142,8 @@ public class AddFileController {
      * Switches to the main menu scene after adding a file.
      * @param event
      * @throws IOException
-     */
+     */@FXML
+
     private void switchToMenuScene(ActionEvent event) throws IOException {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("menu.fxml"));

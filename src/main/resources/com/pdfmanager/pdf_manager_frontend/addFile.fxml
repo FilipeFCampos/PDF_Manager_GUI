@@ -15,55 +15,74 @@
             <children>
                 <VBox fx:id="addFileGlobalPane" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                     <children>
-                        <Label text="Document type:" />
+                        <Label text="Tipo de documento:" />
                         <HBox prefHeight="22.0" prefWidth="289.0" spacing="40.0">
                             <children>
-                                <RadioButton fx:id="bookrb" mnemonicParsing="false" text="Book">
+                                <RadioButton fx:id="bookrb" mnemonicParsing="false" text="Livro">
                            <toggleGroup>
                               <ToggleGroup fx:id="documenttype" />
                            </toggleGroup></RadioButton>
-                                <RadioButton fx:id="classnoterb" mnemonicParsing="false" text="Class note" toggleGroup="$documenttype" />
+                                <RadioButton fx:id="classnoterb" mnemonicParsing="false" text="Notas de aula" toggleGroup="$documenttype" />
                                 <RadioButton fx:id="sliderb" mnemonicParsing="false" text="Slide" toggleGroup="$documenttype" />
                             </children></HBox>
-                        <Label text="Write the path:" />
+                        <Label text="Escreva o caminho:" />
                         <TextField fx:id="pathfield" />
-                        <Label text="Title:" />
+                        <Label text="Titulo:" />
                         <TextField fx:id="titlefield" />
-                        <Label text="Authors (separated by commas):" />
+                        <Label text="Autores(separados por vírgulas):" />
                         <TextField fx:id="authorsfield" />
-                  <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#submit" text="Next" />
+                  <HBox layoutX="10.0" layoutY="38.0" prefHeight="22.0" prefWidth="289.0" spacing="180.0">
+                     <children>
+                        <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#submit" text="Próximo" />
+                        <Button mnemonicParsing="false" onAction="#switchToMenuScene" text="Voltar" />
+                     </children>
+                  </HBox>
                     </children></VBox>
             <VBox fx:id="addBookPane" disable="true" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" visible="false">
                <children>
-                  <Label text="Subtitle" />
+                  <Label text="Subtítulo" />
                   <TextField fx:id="subtitlefieldB" />
-                  <Label text="Field of knowledge" />
+                  <Label text="campo de conhecimento" />
                   <TextField fx:id="fieldofknowledgefield" />
-                  <Label text="Publish year" />
+                  <Label text="Ano de publicação" />
                   <TextField fx:id="publishyearfield" />
-                  <Label layoutX="10.0" layoutY="138.0" text="Publisher" />
+                  <Label layoutX="10.0" layoutY="138.0" text="editora" />
                   <TextField fx:id="publisherfield" layoutX="10.0" layoutY="166.0" />
-                  <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#addBook" text="Submit" />
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="180.0">
+                     <children>
+                        <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#addBook" text="Enviar" />
+                        <Button mnemonicParsing="false" onAction="#voltarGlobal" text="Voltar" />
+                     </children></HBox>
                </children>
             </VBox>
             <VBox fx:id="addClassNotePane" disable="true" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" visible="false">
                <children>
-                  <Label text="Subtitle" />
+                  <Label text="Subtítulo" />
                   <TextField fx:id="subtitlefieldCN" />
-                  <Label text="Lecture name" />
+                  <Label text="Nome da matéria" />
                   <TextField fx:id="lecturenamefieldCN" />
-                  <Label text="Institution name" />
+                  <Label text="Nome da instituição" />
                   <TextField fx:id="institutionnamefieldCN" />
-                  <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#addClassNote" text="Submit" />
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="180.0">
+                     <children>
+                        <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#addClassNote" text="Enviar" />
+                        <Button mnemonicParsing="false" onAction="#voltarGlobal" text="Voltar" />
+                     </children>
+                  </HBox>
                </children>
             </VBox>
             <VBox fx:id="addSlidePane" disable="true" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" visible="false">
                <children>
-                  <Label text="Lecture name" />
+                  <Label text="Nome da matéria" />
                   <TextField fx:id="lecturenamefieldS" />
-                  <Label text="Institution name" />
+                  <Label text="Nome da instituição" />
                   <TextField fx:id="institutionnamefieldS" />
-                  <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#addSlide" text="Submit" />
+                  <HBox prefHeight="28.0" prefWidth="290.0" spacing="180.0">
+                     <children>
+                        <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#addSlide" text="Enviar" />
+                        <Button mnemonicParsing="false" onAction="#voltarGlobal" text="Voltar" />
+                     </children>
+                  </HBox>
                </children>
             </VBox>
             </children>

@@ -11,19 +11,19 @@
                 <Font name="Arial Bold" size="28.0" />
             </font>
         </Text>
-      <Text layoutX="95.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to PDF Manager!!" textAlignment="CENTER" wrappingWidth="289.32421875">
+      <Text layoutX="95.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bem vindo ao PDF Manager!!" textAlignment="CENTER" wrappingWidth="289.32421875">
          <font>
             <Font size="18.0" />
          </font></Text>
       <VBox layoutX="95.0" layoutY="140.0" prefHeight="200.0" prefWidth="289.0" spacing="10.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Library path:" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="caminho da bíblioteca:" />
             <TextField fx:id="librarypathfield" />
-            <Text layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Library name:" />
+            <Text layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome da biblioteca" />
             <TextField fx:id="librarynamefield" layoutX="10.0" layoutY="37.0" />
             <HBox prefHeight="28.0" prefWidth="289.0" spacing="20.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Use existing library?" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Usar biblioteca existente?" />
                   <CheckBox fx:id="existinglibrarycb" mnemonicParsing="false" onAction="#existingPathWarning" />
                </children>
             </HBox>
@@ -31,7 +31,7 @@
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Text>
-            <Button fx:id="savebutton" mnemonicParsing="false" onAction="#saveButtonAction" text="Save" />
+            <Button fx:id="savebutton" mnemonicParsing="false" onAction="#saveButtonAction" text="Salvar" />
          </children>
       </VBox>
     </children>
