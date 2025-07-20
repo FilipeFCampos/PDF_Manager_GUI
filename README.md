@@ -78,4 +78,5 @@ Quando você cadastra um arquivo, ele é:
 - Maven (Gerenciador de dependências)
 - Jackson (Manipulação de JSON)
 - Rest-Assured (Parsing de JSON via JsonPath no backend)
+- JavaFX
 
