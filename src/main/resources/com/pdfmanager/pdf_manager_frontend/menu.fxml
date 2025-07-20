@@ -15,7 +15,7 @@
          <children>
             <VBox fx:id="options" prefHeight="200.0" prefWidth="289.0" spacing="10.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Escolha uma das opçõesa baixo:">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Escolha uma das opções abaixo:">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
                      </font>
