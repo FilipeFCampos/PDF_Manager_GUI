@@ -948,6 +948,40 @@ public class UserInterface {
         }
     }
 
+    public boolean moveLibraryContents(String sourcePath, String destPath) {
+        File sourceDir = new File(sourcePath);
+        File destDir = new File(destPath);
+
+        if (!sourceDir.exists() || !sourceDir.isDirectory()) {
+            System.err.println("Origem inválida: " + sourcePath);
+            return false;
+        }
+
+        if (!destDir.exists()) {
+            if (!destDir.mkdirs()) {
+                System.err.println("Não foi possível criar o diretório de destino: " + destPath);
+                return false;
+            }
+        }
+
+        File[] files = sourceDir.listFiles();
+        if (files == null) {
+            System.err.println("Erro ao listar arquivos da origem.");
+            return false;
+        }
+
+        for (File file : files) {
+            File destFile = new File(destDir, file.getName());
+
+            if (!file.renameTo(destFile)) {
+                System.err.println("Erro ao mover: " + file.getName());
+            }
+        }
+
+        return true;
+    }
+
+
     /**
      * Prints class notes from the database.
      */
