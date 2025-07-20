@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.pdfmanager.pdf_manager_frontend.RemoveFilesController">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+            <Label text="Remover Arquivos da Biblioteca" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+            <Pane>
+                <HBox.hgrow>
+                    <Priority fx:constant="ALWAYS" />
+                </HBox.hgrow>
+            </Pane>
+
+            <Button onAction="#handleBackButton" text="Voltar" />
+        </HBox>
+    </top>
+
+    <center>
+        <TabPane>
+            <Tab closable="false" text="Livros">
+                <VBox spacing="10">
+                    <padding>
+                        <Insets bottom="10" left="10" right="10" top="10" />
+                    </padding>
+                    <TableView fx:id="booksTable" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="bookTitleColumn" prefWidth="250" text="Título" />
+                            <TableColumn fx:id="bookPublisherColumn" prefWidth="200" text="Editora" />
+                            <TableColumn fx:id="bookYearColumn" prefWidth="100" text="Ano" />
+                        </columns>
+                    </TableView>
+                    <Button onAction="#handleRemoveBook" text="Remover Livro Selecionado" />
+                </VBox>
+            </Tab>
+
+            <Tab closable="false" text="Anotações de Aula">
+                <VBox spacing="10">
+                    <padding>
+                        <Insets bottom="10" left="10" right="10" top="10" />
+                    </padding>
+                    <TableView fx:id="notesTable" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="noteTitleColumn" prefWidth="250" text="Título" />
+                            <TableColumn fx:id="noteLectureColumn" prefWidth="200" text="Disciplina" />
+                            <TableColumn fx:id="noteInstitutionColumn" prefWidth="150" text="Instituição" />
+                        </columns>
+                    </TableView>
+                    <Button onAction="#handleRemoveNote" text="Remover Anotação Selecionada" />
+                </VBox>
+            </Tab>
+
+            <Tab closable="false" text="Slides">
+                <VBox spacing="10">
+                    <padding>
+                        <Insets bottom="10" left="10" right="10" top="10" />
+                    </padding>
+                    <TableView fx:id="slidesTable" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="slideTitleColumn" prefWidth="250" text="Título" />
+                            <TableColumn fx:id="slideLectureColumn" prefWidth="200" text="Disciplina" />
+                            <TableColumn fx:id="slideInstitutionColumn" prefWidth="150" text="Instituição" />
+                        </columns>
+                    </TableView>
+                    <Button onAction="#handleRemoveSlide" text="Remover Slide Selecionado" />
+                </VBox>
+            </Tab>
+        </TabPane>
+    </center>
+
+</BorderPane>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="480.0" prefWidth="488.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pdfmanager.pdf_manager_frontend.AddFileController">
+    <children>
+        <Text layoutX="95.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\\o/ PDF MANAGER \o/" textAlignment="CENTER">
+            <font>
+                <Font name="Arial Bold" size="28.0" />
+            </font>
+        </Text>
+        <StackPane fx:id="stackPane" layoutX="95.0" layoutY="128.0" prefHeight="176.0" prefWidth="289.0">
+            <children>
+                <VBox fx:id="addFileGlobalPane" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                    <children>
+                        <Label text="Tipo de documento:" />
+                        <HBox prefHeight="22.0" prefWidth="289.0" spacing="40.0">
+                            <children>
+                                <RadioButton fx:id="bookrb" mnemonicParsing="false" text="Livro">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="documenttype" />
+                           </toggleGroup></RadioButton>
+                                <RadioButton fx:id="classnoterb" mnemonicParsing="false" text="Notas de aula" toggleGroup="$documenttype" />
+                                <RadioButton fx:id="sliderb" mnemonicParsing="false" text="Slide" toggleGroup="$documenttype" />
+                            </children></HBox>
+                        <Label text="Escreva o caminho:" />
+                        <TextField fx:id="pathfield" />
+                        <Label text="Titulo:" />
+                        <TextField fx:id="titlefield" />
+                        <Label text="Autores(separados por vírgulas):" />
+                        <TextField fx:id="authorsfield" />
+                  <HBox layoutX="10.0" layoutY="38.0" prefHeight="22.0" prefWidth="289.0" spacing="180.0">
+                     <children>
+                        <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#submit" text="Próximo" />
+                        <Button mnemonicParsing="false" onAction="#switchToMenuScene" text="Voltar" />
+                     </children>
+                  </HBox>
+                    </children></VBox>
+            <VBox fx:id="addBookPane" disable="true" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" visible="false">
+               <children>
+                  <Label text="Subtítulo" />
+                  <TextField fx:id="subtitlefieldB" />
+                  <Label text="campo de conhecimento" />
+                  <TextField fx:id="fieldofknowledgefield" />
+                  <Label text="Ano de publicação" />
+                  <TextField fx:id="publishyearfield" />
+                  <Label layoutX="10.0" layoutY="138.0" text="editora" />
+                  <TextField fx:id="publisherfield" layoutX="10.0" layoutY="166.0" />
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="180.0">
+                     <children>
+                        <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#addBook" text="Enviar" />
+                        <Button mnemonicParsing="false" onAction="#voltarGlobal" text="Voltar" />
+                     </children></HBox>
+               </children>
+            </VBox>
+            <VBox fx:id="addClassNotePane" disable="true" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" visible="false">
+               <children>
+                  <Label text="Subtítulo" />
+                  <TextField fx:id="subtitlefieldCN" />
+                  <Label text="Nome da matéria" />
+                  <TextField fx:id="lecturenamefieldCN" />
+                  <Label text="Nome da instituição" />
+                  <TextField fx:id="institutionnamefieldCN" />
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="180.0">
+                     <children>
+                        <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#addClassNote" text="Enviar" />
+                        <Button mnemonicParsing="false" onAction="#voltarGlobal" text="Voltar" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox fx:id="addSlidePane" disable="true" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" visible="false">
+               <children>
+                  <Label text="Nome da matéria" />
+                  <TextField fx:id="lecturenamefieldS" />
+                  <Label text="Nome da instituição" />
+                  <TextField fx:id="institutionnamefieldS" />
+                  <HBox prefHeight="28.0" prefWidth="290.0" spacing="180.0">
+                     <children>
+                        <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#addSlide" text="Enviar" />
+                        <Button mnemonicParsing="false" onAction="#voltarGlobal" text="Voltar" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            </children>
+        </StackPane>
+    </children>
+</AnchorPane>

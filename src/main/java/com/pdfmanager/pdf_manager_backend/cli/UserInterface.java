@@ -12,6 +12,7 @@ import com.pdfmanager.pdf_manager_backend.files.Slide;
 import com.pdfmanager.pdf_manager_backend.utils.BibTexGenerator;
 import com.pdfmanager.pdf_manager_backend.utils.CollectionPackager;
 import com.pdfmanager.pdf_manager_backend.utils.FileManager;
+import com.pdfmanager.pdf_manager_backend.utils.GUIException;
 import io.restassured.path.json.JsonPath;
 
 import java.io.File;
@@ -134,6 +135,10 @@ public class UserInterface {
         }
         System.out.println("Exiting program.");
         System.exit(0);
+    }
+
+    public String test() {
+        return "Some content";
     }
 
     // =================================================================================
@@ -383,7 +388,7 @@ public class UserInterface {
                 System.err.println("Book collection not found.");
                 return;
             }
-            System.out.print("Enter the full output path (e.g., C:/Users/Me/Desktop/references.bib): ");
+            System.out.print("Enter the full outputField path (e.g., C:/Users/Me/Desktop/references.bib): ");
             Path outputPath = Paths.get(scanner.nextLine());
 
             // CORREÇÃO: Lê o arquivo de livros usando a classe correta (Book)
@@ -423,7 +428,7 @@ public class UserInterface {
                 System.err.println("Collection not found.");
                 return;
             }
-            System.out.print("Enter the full output path for the zip file (e.g., C:/Users/Me/Desktop/package.zip): ");
+            System.out.print("Enter the full outputField path for the zip file (e.g., C:/Users/Me/Desktop/package.zip): ");
             Path outputPath = Paths.get(scanner.nextLine());
 
             ObjectMapper mapper = new ObjectMapper();
@@ -768,6 +773,46 @@ public class UserInterface {
     }
 
     /**
+     * Adds a file to the database from the GUI.
+     * @param data The data map containing the file information.
+     * @return
+     * @throws GUIException
+     */
+    public String addToDbFromGUI(Map<String, Object> data) throws GUIException {
+
+        // Check if data is null or empty.
+        if (data == null || data.isEmpty()) {
+            throw new GUIException("ERROR: No data provided.");
+        }
+        // Checks if the file path is valid.
+        if (!fileManager.evaluatePath((String) data.get("path"))) {
+            throw new GUIException("ERROR: File path is invalid.");
+        }
+        // Gets the title and type from the data map to use as parameters to the 'addToLibrary' function.
+        String title = data.get("title").toString();
+        String type = data.get("type").toString();
+        File path;
+        // Determines the database path based on the type of document.
+        if (type.equals("Book")) path = db.getBooksPath();
+        else if (type.equals("ClassNote")) path = db.getClassNotesPath();
+        else path = db.getSlidesPath();
+
+        // Tries to write the json object in the database and copy the file to the library.
+        try {
+            db.writeObject(data);
+        } catch (Exception e) {
+            throw new GUIException("ERROR: Failed to write object to the database");
+        }
+        try {
+            addToLibrary(title, path);
+        } catch (IOException e) {
+            throw new GUIException("ERROR: Failed to copy file to library.");
+        }
+        // If everything goes well, returns a success message.
+        return "File '" + title + "' added successfully to the database.";
+    }
+
+    /**
      * Handles the edit field option logic.
      */
     private void editField() {
@@ -903,6 +948,40 @@ public class UserInterface {
         }
     }
 
+    public boolean moveLibraryContents(String sourcePath, String destPath) {
+        File sourceDir = new File(sourcePath);
+        File destDir = new File(destPath);
+
+        if (!sourceDir.exists() || !sourceDir.isDirectory()) {
+            System.err.println("Origem inválida: " + sourcePath);
+            return false;
+        }
+
+        if (!destDir.exists()) {
+            if (!destDir.mkdirs()) {
+                System.err.println("Não foi possível criar o diretório de destino: " + destPath);
+                return false;
+            }
+        }
+
+        File[] files = sourceDir.listFiles();
+        if (files == null) {
+            System.err.println("Erro ao listar arquivos da origem.");
+            return false;
+        }
+
+        for (File file : files) {
+            File destFile = new File(destDir, file.getName());
+
+            if (!file.renameTo(destFile)) {
+                System.err.println("Erro ao mover: " + file.getName());
+            }
+        }
+
+        return true;
+    }
+
+
     /**
      * Prints class notes from the database.
      */
@@ -992,6 +1071,38 @@ public class UserInterface {
                 System.err.println("Unknown option: '" + input2 + "'");
                 editLibraryPath();
             }
+        }
+    }
+
+    /**
+     * Edits the library path from the GUI.
+     * @param newPath The new path to set for the library.
+     * @param libraryName The name of the library to be created or used.
+     * @param existingLibrary If true, the method will try to use an existing library.
+     * @throws GUIException If the new path is invalid or if the library cannot be created or used.
+     * GUIExceptions should be displayed as alert messages in the GUI.
+     */
+    public void editLibraryPathFromGUI(String newPath, String libraryName, boolean existingLibrary) throws GUIException {
+        // Check if the new path is valid
+        if (fileManager.evaluatePath(newPath)) {
+            updateConfig("libraryPath", newPath);
+        } else {
+            throw new GUIException("ERROR: Invalid path provided.");
+        }
+        // Tries to create a NEW directory with the specified library name, if successful, updates the config.
+        if (fileManager.createDirectory(newPath, libraryName)) {
+            updateConfig("libraryPath", newPath + File.separator + libraryName);
+            updateConfig("isFirstAccess", "false");
+        } else if (existingLibrary) {
+            // If the directory already exists and the user wants to use an existing library, update the config.
+            updateConfig("libraryPath", newPath + File.separator + libraryName);
+            updateConfig("isFirstAccess", "false");
+        } else {
+            // If the user directory already exists in the path, but the 'Use existing library' option is
+            // not checked, throws an exception prompting the user to try again (ideally, this should be
+            // displayed as an alert message from the GUI).
+            throw new GUIException("'" + libraryName + "' exists in path, but 'Use existing library' " +
+                    "option wasn't set, please try again.");
         }
     }
 
