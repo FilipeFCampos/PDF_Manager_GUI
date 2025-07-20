@@ -28,6 +28,22 @@ Atualmente, o sistema suporta três tipos de documentos:
 
 ---
 
+## 🖼️ Interface Gráfica (GUI)
+
+A nova interface gráfica foi implementada com **JavaFX**, permitindo uma navegação mais intuitiva e amigável para o usuário.
+
+Com a GUI, é possível:
+
+- Visualizar e navegar pelos arquivos cadastrados
+- Adicionar novos arquivos à biblioteca
+- Editar ou remover arquivos existentes
+- Adicionar e editar coleções de arquivos
+- Ver os detalhes de cada arquivo com apenas um clique
+
+A GUI é construída sobre a lógica já existente do projeto e segue a estrutura MVC, separando o backend da interface.
+
+---
+
 ## Organização da Biblioteca
 
 Quando você cadastra um arquivo, ele é:
